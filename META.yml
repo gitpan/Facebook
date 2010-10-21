@@ -1,5 +1,5 @@
 ---
-abstract: 'The try for a Facebook SDK'
+abstract: 'The try for a Facebook SDK in Perl'
 author:
   - 'Torsten Raudssus <torsten@raudssus.de> http://www.raudssus.de/'
 build_requires:
@@ -26,4 +26,4 @@ requires:
   perl: 5.8.0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.001
+version: 0.002

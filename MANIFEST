@@ -8,7 +8,9 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Facebook.pm
 lib/Facebook/Cookie.pm
+lib/Facebook/Manual.pod
 Makefile.PL
 MANIFEST			This list of files
 META.yml
 t/00-load.t
+t/01-cookie.t
