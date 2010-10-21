@@ -1,15 +1,29 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Facebook
-version:      0.0.0alpha1
-version_from: lib/Facebook.pm
-installdirs:  site
-requires:
-    Data::Dumper:                  0
-    Digest::MD5:                   0
-    LWP::UserAgent:                0
-    URI:                           0
-    XML::Simple:                   0
-
+---
+abstract: 'The try for a Facebook SDK'
+author:
+  - 'Torsten Raudssus <torsten@raudssus.de> http://www.raudssus.de/'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+  Test::More: 0.47
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30
+generated_by: 'Module::Install version 1.00'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Facebook
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Carp: 0
+  Digest::MD5: 0
+  Moose: 1.15
+  namespace::autoclean: 0
+  perl: 5.8.0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.001

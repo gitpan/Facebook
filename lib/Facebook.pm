@@ -1,185 +1,204 @@
 package Facebook;
 
-use warnings;
-use strict;
+use Moose;
+use Carp qw/croak/;
 
-use URI;
-use Digest::MD5 qw(md5_hex);
-use LWP::UserAgent;
-use XML::Simple;
-use Data::Dumper;
+use namespace::autoclean;
 
-use vars qw($VERSION);
-$VERSION = '0.0.0alpha1';
+our $VERSION = '0.001';
+$VERSION = eval $VERSION;
 
-my $webbrowser = 'browser';
+=encoding utf8
 
-=begin html
+=head1 NAME
 
-<style>
-a:visited { color: blue; }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
-body { margin: 2em; padding: 2em; background-color: white; }
-html { background-color: lightblue; }
-h1 { color: green; }
-</style>
-
-=end html
-
-=head1 DOWNLOAD
-
-L<http://oss.snoyman.com/Facebook-0.0.0alpha1.tar.gz>
-
-=head1 DESCRIPTION
-
-A simplistic library for accessing Facebook's API L<http://api.facebook.com>. It will pass messages from your program (either desktop or web based) to the Facebook REST server. Please read L</INFORMATION> below for more details, especially if writing a desktop version.
+Facebook - The try for a Facebook SDK
 
 =head1 SYNOPSIS
 
-use Facebook;
-use CGI;
+  use Facebook;
 
-my $api_key = 'thisisprovidedbyfacebook';
-my $secret  = 'soisthis';
+  my $fb = Facebook->new(
+    app_id => $self->app_id,
+    secret => $self->secret,
+  );
+  
+  # You need to have Facebook::Graph installed so that this works
+  my $gettys_facebook_profile = $fb->graph->query
+    ->find(100001153174797)
+    ->include_metadata
+    ->request
+    ->as_hashref;
 
-my $cgi = CGI->new;
-my $f = Facebook->new($api_key, $secret);
+=head1 DESCRIPTION
 
-my $session = $cgi->param('session'); # Set in a previous request
-my $auth_token = $cgi->param('auth_token'); # Same
+If you want to use ->graph you need to install Facebook::Graph
 
-if(!(defined $session) && !(defined $auth_token)) {
-	print $cgi->redirect('http://api.facebook.com/login.php?api_key=' . $api_key);
-	exit;
-}
-elsif(defined $auth_token) {
-	$f->auth_token($auth_token);
-	if($f->{SESSION}) {
-		print $cgi->redirect('?session=' . $f->{SESSION});
-	}
-	else {
-		print $cgi->redirect('?'); # Start over, something didn't work
-	}
-	exit;
-}
+If you want to use ->rest you need to install WWW::Facebook::API
 
 =cut
 
-=head1 CONSTRUCTORS
+has uid => (
+	isa => 'Maybe[Str]',
+	is => 'rw',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->cookie->uid;
+	},
+);
 
-=head2 new($api_key, $secret)
+has app_id => (
+	isa => 'Maybe[Str]',
+	is => 'rw',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->cookie->app_id;
+	},
+);
 
-=cut
+has secret => (
+	isa => 'Maybe[Str]',
+	is => 'rw',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->cookie->secret;
+	},
+);
 
-sub new {
-	my $class = shift;
-	my ($api_key, $secret) = @_;
+has access_token => (
+	isa => 'Maybe[Str]',
+	is => 'ro',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->cookie->access_token;
+	},
+);
 
-	my $browser = LWP::UserAgent->new;
-	$browser->agent('Mozilla/9.0');
-	my $self = {
-		SERVERADDR => 'http://api.facebook.com/restserver.php',
-		APIKEY     => $api_key,
-		SECRET     => $secret,
-		BROWSER    => $browser,
-		XML        => XML::Simple->new,
-	};
+has cookie => (
+	isa => 'Facebook::Cookie',
+	is => 'ro',
+	lazy => 1,
+	default => sub { croak 'cookie is require' },
+	predicate => 'has_cookie',
+);
 
-	bless $self, $class;
-	return $self;
-}
+has graph_class => (
+	isa => 'Str',
+	is => 'ro',
+	default => sub { 'Facebook::Graph' },
+);
+
+has graph_api => (
+	is => 'ro',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->graph_class->new(
+			app_id => $self->app_id,
+			secret => $self->secret,
+			access_token => $self->access_token,
+		);
+	},
+);
+
+has rest_class => (
+	isa => 'Str',
+	is => 'ro',
+	required => 1,
+	default => sub { 'WWW::Facebook::API' },
+);
+
+has rest_api => (
+	is => 'ro',
+	lazy => 1,
+	default => sub {
+		my $self = shift;
+		$self->rest_class->new(
+			app_id => $self->app_id,
+			secret => $self->secret,
+		);
+	},
+);
 
 =head1 METHODS
 
-=head2 login()
+=head2 $obj->graph
+
+=over 4
+
+=item Arguments: None
+
+=item Return value: Object
+
+Returns an instance of the graph_class (by default this is Facebook::Graph)
+
+=back
 
 =cut
 
-sub login {
-	my $self = shift;
-	print "Press enter after login is complete...";
-	my $auth_token = $self->login_part1;
-	<STDIN>;
-	$self->auth_token($auth_token);
+sub graph {
+	my ( $self ) = @_;
+	$self->graph_api;
 }
 
-sub login_part1 {
-	my ($self, $email, $password) = @_;
-	my $auth_token = $self->call_method('facebook.auth.createToken')->{token};
-	system "$webbrowser 'https://api.facebook.com/login.php?auth_token=$auth_token&api_key=$self->{APIKEY}'";
-	return $auth_token;
-}
+=head2 $obj->rest
 
-=head2 auth_token($auth_token)
+=over 4
 
-Given an auth_token that has already undergone login,
-grab the secret, session, and uid via a
-facebook.auth.getSession call.
+=item Arguments: None
 
-=cut
-sub auth_token {
-	my $self = shift;
-	my $auth_token = shift;
-	
-	my $xml = $self->call_method('facebook.auth.getSession', auth_token => $auth_token);
-	my $secret = $xml->{secret};
-	$self->{SECRET} = $secret if $secret;
-	$self->{SESSION} = $xml->{session_key};
-	$self->{UID}     = $xml->{uid};
-	return $xml;
-}
+=item Return value: Object
 
-=head2 call_method($method, $param1key => $param1value, ...)
+Returns an instance of the rest_class (by default this is WWW::Facebook::API)
+
+=back
 
 =cut
 
-sub call_method {
-	# This is ripped off of the java FacebookRestClient.callMethod
-	my $self = shift;
-	my $method = shift;
-	my %params = @_;
-	$params{method} = $method;
-	$params{api_key} = $self->{APIKEY};
-	$params{call_id} = time;
-	if(my $session = $self->{SESSION}) {
-		$params{session_key} = $session;
-	}
-	$params{sig} = $self->generate_sig(%params);
-	
-	my $browser = $self->{BROWSER};
-	my $response = $browser->post($self->{SERVERADDR}, \%params);
-	unless($response->is_success) {
-		$self->{RESPONSE} = $response;
-		return undef;
-	}
-	return $self->{XML}->XMLin($response->content);
+sub rest {
+	my ( $self ) = @_;
+	$self->rest_api;
 }
 
-=head2 generate_sig(@params)
+=head1 LIMITATIONS
 
-Code based on java's FacebookRestClient.generateSig
+=head1 TROUBLESHOOTING
+
+=head1 SUPPORT
+
+IRC
+
+  Join #facebook on irc.perl.org.
+
+Repository
+
+  http://github.com/Getty/p5-facebook
+  Pull request and additional contributors are welcome
+ 
+Issue Tracker
+
+  http://github.com/Getty/p5-facebook/issues
+
+=head1 AUTHOR
+
+Torsten Raudssus <torsten@raudssus.de> http://www.raudssus.de/
+
+=head1 CONTRIBUTORS
+
+=head1 COPYRIGHT
+
+Copyright (c) 2010 the Facebook L</AUTHOR> and L</CONTRIBUTORS> as
+listed above.
+
+=head1 LICENSE
+
+This library is free software and may be distributed under the same terms
+as perl itself.
 
 =cut
-
-sub generate_sig {
-	my $self = shift;
-	my @params;
-	my %params = @_;
-	while(@_) {
-		my $key = shift;
-		my $value = shift;
-		push @params, "$key=$value";
-	}
-	return md5_hex(join('', sort @params) . $self->{SECRET});
-}
 
 1;
-
-=head1 INFORMATION
-
-Due to Facebook's anti-phishing approach, you need to allow the user to log in through their web browser. When writing a web app, this is easily handled (see the synopsis above). For a desktop application, this is more tricky. You'll need to manually edit the $browser variable in Facebook.pm to be the web browser (ie, /usr/bin/firefox). If you have any ideas on how to do this better, let me know.
-
-This library will store all the information it needs to send requests, such as session. Once again, please read the L</SYNOPSIS>.
-
-=cut

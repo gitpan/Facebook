@@ -1,16 +1,16 @@
-use ExtUtils::MakeMaker;
+use inc::Module::Install 0.64;
 
-my %prereqs = (
-	URI => 0,
-	Digest::MD5 => 0,
-	LWP::UserAgent => 0,
-	XML::Simple => 0,
-	Data::Dumper => 0,
-);
+name 'Facebook';
 
-WriteMakefile(
-	NAME          => 'Facebook',
-	VERSION_FROM  => 'lib/Facebook.pm',
-	DISTNAME      => 'Facebook',
-	PREREQ_PM     => \%prereqs,
-);
+perl_version '5.008';
+license 'perl';
+all_from 'lib/Facebook.pm';
+
+requires 'Moose' => 1.15;
+requires 'Carp';
+requires 'Digest::MD5';
+requires 'namespace::autoclean';
+
+test_requires 'Test::More' => '0.47';
+
+WriteAll;
