@@ -7,9 +7,9 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Facebook.pm
-lib/Facebook/Cookbook.pod
+lib/Facebook/Cookbook.pm
 lib/Facebook/Cookie.pm
-lib/Facebook/Manual.pod
+lib/Facebook/Manual.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
