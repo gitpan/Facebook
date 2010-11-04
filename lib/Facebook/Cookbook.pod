@@ -1,12 +1,17 @@
-package Facebook::Cookbook;
+# PODNAME: Facebook::Cookbook
+# ABSTRACT: How to cook your face.....book :)
 
-1;
 
-=encoding utf8
+__END__
+=pod
 
 =head1 NAME
 
 Facebook::Cookbook - How to cook your face.....book :)
+
+=head1 VERSION
+
+version 0.006
 
 =head1 DESCRIPTION
 
@@ -14,6 +19,8 @@ The L<Facebook::Cookbook> is a series of recipes showing various L<Facebook> fea
 code demonstrating some feature, and then explain the details of the code.
 
 You should probably read the L<Facebook::Manual> first. The manual explains Facebook concepts without being too code-heavy.
+
+=encoding utf8
 
 =head1 RECIPES
 
@@ -31,7 +38,7 @@ Repository
 
   http://github.com/Getty/p5-facebook
   Pull request and additional contributors are welcome
- 
+
 Issue Tracker
 
   http://github.com/Getty/p5-facebook/issues
@@ -54,4 +61,16 @@ listed on L<Facebook> and all other packages in this distribution.
 This documentation is free software and may be distributed under the same terms
 as perl itself.
 
+=head1 AUTHOR
+
+Torsten Raudssus <torsten@raudssus.de>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Facebook Distribution Authors.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 =cut
+

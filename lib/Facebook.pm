@@ -1,53 +1,14 @@
 package Facebook;
+BEGIN {
+  $Facebook::VERSION = '0.006';
+}
+# ABSTRACT: The try for a Facebook SDK in Perl
 
 use Moose;
 use Carp qw/croak/;
 
 use namespace::autoclean;
 
-our $VERSION = '0.005';
-$VERSION = eval $VERSION;
-
-=encoding utf8
-
-=head1 NAME
-
-Facebook - The try for a Facebook SDK in Perl
-
-=head1 SYNOPSIS
-
-  use Facebook;
-
-  my $fb = Facebook->new(
-    app_id => $app_id,
-    secret => $secret,
-  );
-
-  use Facebook::Cookie;
-
-  my $fb = Facebook->new(
-    cookie => Facebook::Cookie->new(
-      app_id => $app_id,
-      secret => $secret,
-      cookie => $cookie_as_text,
-    ),
-  );
-  
-  # You need to have Facebook::Graph installed so that this works
-  my $gettys_facebook_profile = $fb->graph->query
-    ->find(100001153174797)
-    ->include_metadata
-    ->request
-    ->as_hashref;
-
-=head1 DESCRIPTION
-
-B<If you are new to Facebook application development in Perl please read L<Facebook::Manual>!>
-
-This package reflects an instance for your application. Depending on what API of it you use, you require to install the
-needed distributions or provide alternative packages yourself.
-
-=cut
 
 has uid => (
 	isa => 'Maybe[Str]',
@@ -135,85 +96,104 @@ has rest_api => (
 	},
 );
 
-=head1 METHODS
-
-=head2 $obj->graph
-
-=over 4
-
-=item Arguments: None
-
-=item Return value: Object
-
-B<If you want to use this, you need to install L<Facebook::Graph>!>
-
-Returns an instance of the graph_class (by default this is L<Facebook::Graph>)
-
-=back
-
-=cut
 
 sub graph {
 	my ( $self ) = @_;
 	$self->graph_api;
 }
 
-=head2 $obj->rest
-
-=over 4
-
-=item Arguments: None
-
-=item Return value: Object
-
-B<If you want to use this, you need to install L<WWW::Facebook::API>!>
-
-Returns an instance of the rest_class (by default this is L<WWW::Facebook::API>)
-
-=back
-
-=cut
 
 sub rest {
 	my ( $self ) = @_;
 	$self->rest_api;
 }
 
+
+1;
+__END__
+=pod
+
+=head1 NAME
+
+Facebook - The try for a Facebook SDK in Perl
+
+=head1 VERSION
+
+version 0.006
+
+=head1 SYNOPSIS
+
+  use Facebook;
+
+  my $fb = Facebook->new(
+    app_id => $app_id,
+    secret => $secret,
+  );
+
+  use Facebook::Cookie;
+
+  my $fb = Facebook->new(
+    cookie => Facebook::Cookie->new(
+      app_id => $app_id,
+      secret => $secret,
+      cookie => $cookie_as_text,
+    ),
+  );
+  
+  # You need to have Facebook::Graph installed so that this works
+  my $gettys_facebook_profile = $fb->graph->query
+    ->find(100001153174797)
+    ->include_metadata
+    ->request
+    ->as_hashref;
+
+=head1 DESCRIPTION
+
+B<If you are new to Facebook application development in Perl please read L<Facebook::Manual>!>
+
+This package reflects an instance for your application. Depending on what API of it you use, you require to install the
+needed distributions or provide alternative packages yourself.
+
+=head1 METHODS
+
+=head2 $obj->graph
+
+Arguments: None
+
+Return value: Object
+
+B<If you want to use this, you need to install L<Facebook::Graph>!>
+
+Returns an instance of the graph_class (by default this is L<Facebook::Graph>)
+
+=head2 $obj->rest
+
+Arguments: None
+
+Return value: Object
+
+B<If you want to use this, you need to install L<WWW::Facebook::API>!>
+
+Returns an instance of the rest_class (by default this is L<WWW::Facebook::API>)
+
+=encoding utf8
+
+=head1 METHODS
+
 =head1 LIMITATIONS
 
 =head1 TROUBLESHOOTING
 
-=head1 SUPPORT
-
-IRC
-
-  Join #facebook on irc.perl.org.
-
-Repository
-
-  http://github.com/Getty/p5-facebook
-  Pull request and additional contributors are welcome
- 
-Issue Tracker
-
-  http://github.com/Getty/p5-facebook/issues
-
 =head1 AUTHOR
 
-Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>
+Torsten Raudssus <torsten@raudssus.de>
 
-=head1 CONTRIBUTORS
+=head1 COPYRIGHT AND LICENSE
 
-=head1 COPYRIGHT
+This software is copyright (c) 2010 by Facebook Distribution Authors.
 
-Copyright (c) 2010 the Facebook L</AUTHOR> and L</CONTRIBUTORS> as
-listed on L<Facebook> and all other packages in this distribution.
-
-=head1 LICENSE
-
-This library is free software and may be distributed under the same terms
-as perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-1;

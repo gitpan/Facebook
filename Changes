@@ -1,0 +1,8 @@
+Revision history for Facebook
+
+0.006     2010-11-04 22:46:51 Europe/Berlin
+	- switched to Dist::Zilla
+	- lots of stuff for Facebook::Manual
+
+0.005  2010-10-22 19:35:29
+	- situation normal, all ....
