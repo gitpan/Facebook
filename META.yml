@@ -1,7 +1,7 @@
 ---
 abstract: 'The try for a Facebook SDK in Perl'
 author:
-  - 'Torsten Raudssus <torsten@raudssus.de>'
+  - 'Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>'
 build_requires:
   Test::More: 0.96
 configure_requires:
@@ -14,14 +14,11 @@ meta-spec:
   version: 1.4
 name: Facebook
 requires:
-  Carp: 0
-  Digest::MD5: 0
-  Moose: 0
-  namespace::autoclean: 0
+  Moose: 1.15
 resources:
   homepage: http://github.com/Getty/p5-facebook/tree
   repository: git://github.com/Getty/p5-facebook.git
-version: 0.006
+version: 0.007
 x_Dist_Zilla:
   plugins:
     -
@@ -81,10 +78,6 @@ x_Dist_Zilla:
       name: '@GETTY/@Basic/UploadToCPAN'
       version: 4.102342
     -
-      class: Dist::Zilla::Plugin::AutoPrereqs
-      name: '@GETTY/AutoPrereqs'
-      version: 4.102342
-    -
       class: Dist::Zilla::Plugin::Git::NextVersion
       name: '@GETTY/Git::NextVersion'
       version: 1.102810
@@ -117,6 +110,10 @@ x_Dist_Zilla:
       name: '@GETTY/GithubMeta'
       version: 0.10
     -
+      class: Dist::Zilla::Plugin::LocalInstall
+      name: '@GETTY/LocalInstall'
+      version: 0.001
+    -
       class: Dist::Zilla::Plugin::Prereqs
       config:
         Dist::Zilla::Plugin::Prereqs:
@@ -145,9 +142,21 @@ x_Dist_Zilla:
       name: '@GETTY/@Git/Push'
       version: 1.102810
     -
-      class: Dist::Zilla::Plugin::GithubMeta
-      name: GithubMeta
-      version: 0.10
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: runtime
+          type: requires
+      name: Prereqs
+      version: 4.102342
+    -
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: test
+          type: requires
+      name: TestRequires
+      version: 4.102342
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'

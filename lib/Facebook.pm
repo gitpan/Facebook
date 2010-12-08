@@ -1,6 +1,6 @@
 package Facebook;
 BEGIN {
-  $Facebook::VERSION = '0.006';
+  $Facebook::VERSION = '0.007';
 }
 # ABSTRACT: The try for a Facebook SDK in Perl
 
@@ -119,7 +119,7 @@ Facebook - The try for a Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
@@ -186,11 +186,11 @@ Returns an instance of the rest_class (by default this is L<WWW::Facebook::API>)
 
 =head1 AUTHOR
 
-Torsten Raudssus <torsten@raudssus.de>
+Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Facebook Distribution Authors.
+This software is copyright (c) 2010 by Raudssus Social Software & Facebook Distribution Authors.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
