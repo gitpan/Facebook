@@ -21,7 +21,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Moose" : "1.15"
+            "Moose" : "1.15",
+            "namespace::autoclean" : 0
          }
       },
       "test" : {
@@ -39,7 +40,7 @@
          "web" : "http://github.com/Getty/p5-facebook/tree"
       }
    },
-   "version" : "0.007",
+   "version" : "0.008",
    "x_Dist_Zilla" : {
       "plugins" : [
          {
@@ -158,6 +159,11 @@
             "version" : "0.001"
          },
          {
+            "class" : "Dist::Zilla::Plugin::Authority",
+            "name" : "@GETTY/Authority",
+            "version" : "1.000"
+         },
+         {
             "class" : "Dist::Zilla::Plugin::Prereqs",
             "config" : {
                "Dist::Zilla::Plugin::Prereqs" : {
@@ -243,6 +249,7 @@
          },
          "version" : "4.102342"
       }
-   }
+   },
+   "x_authority" : "cpan:GETTY"
 }
 

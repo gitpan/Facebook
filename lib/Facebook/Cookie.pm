@@ -1,6 +1,9 @@
 package Facebook::Cookie;
 BEGIN {
-  $Facebook::Cookie::VERSION = '0.007';
+  $Facebook::Cookie::AUTHORITY = 'cpan:GETTY';
+}
+BEGIN {
+  $Facebook::Cookie::VERSION = '0.008';
 }
 # ABSTRACT: Analyzed and signed Facebook Cookie reflection
 
@@ -119,7 +122,7 @@ Facebook::Cookie - Analyzed and signed Facebook Cookie reflection
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 

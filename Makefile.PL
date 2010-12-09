@@ -22,9 +22,10 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'Facebook',
   'PREREQ_PM' => {
-    'Moose' => '1.15'
+    'Moose' => '1.15',
+    'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.007',
+  'VERSION' => '0.008',
   'test' => {
     'TESTS' => 't/*.t'
   }

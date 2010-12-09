@@ -1,6 +1,9 @@
 package Facebook;
 BEGIN {
-  $Facebook::VERSION = '0.007';
+  $Facebook::AUTHORITY = 'cpan:GETTY';
+}
+BEGIN {
+  $Facebook::VERSION = '0.008';
 }
 # ABSTRACT: The try for a Facebook SDK in Perl
 
@@ -119,7 +122,7 @@ Facebook - The try for a Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
