@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::VERSION = '0.008';
+  $Facebook::VERSION = '0.009';
 }
 # ABSTRACT: The try for a Facebook SDK in Perl
 
@@ -72,6 +72,10 @@ has graph_api => (
 	lazy => 1,
 	default => sub {
 		my $self = shift;
+		my $graph_class_file = $self->graph_class;
+		$graph_class_file =~ s/::/\//g;
+		require $graph_class_file.'.pm';
+		$self->graph_class->import;
 		$self->graph_class->new(
 			app_id => $self->app_id,
 			secret => $self->secret,
@@ -92,6 +96,10 @@ has rest_api => (
 	lazy => 1,
 	default => sub {
 		my $self = shift;
+		my $rest_class_file = $self->rest_class;
+		$rest_class_file =~ s/::/\//g;
+		require $rest_class_file.'.pm';
+		$self->rest_class->import;
 		$self->rest_class->new(
 			app_id => $self->app_id,
 			secret => $self->secret,
@@ -122,7 +130,7 @@ Facebook - The try for a Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 
