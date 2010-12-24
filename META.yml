@@ -19,7 +19,7 @@ requires:
 resources:
   homepage: http://github.com/Getty/p5-facebook/tree
   repository: git://github.com/Getty/p5-facebook.git
-version: 0.009
+version: 0.010
 x_Dist_Zilla:
   plugins:
     -

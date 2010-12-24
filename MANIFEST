@@ -11,6 +11,7 @@ lib/Facebook.pm
 lib/Facebook/Cookbook.pod
 lib/Facebook/Cookie.pm
 lib/Facebook/Manual.pod
+lib/Facebook/Signed.pm
 t/00-load.t
-t/01-cookie.t
+t/01-signed.t
 t/release-pod-syntax.t

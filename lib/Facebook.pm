@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::VERSION = '0.009';
+  $Facebook::VERSION = '0.010';
 }
 # ABSTRACT: The try for a Facebook SDK in Perl
 
@@ -13,13 +13,21 @@ use Carp qw/croak/;
 use namespace::autoclean;
 
 
+has desktop => (
+	isa => 'Bool',
+	is => 'ro',
+	required => 1,
+	lazy => 1,
+	default => sub { 0 },
+);
+
 has uid => (
 	isa => 'Maybe[Str]',
 	is => 'rw',
 	lazy => 1,
 	default => sub {
 		my $self = shift;
-		$self->cookie->uid;
+		$self->signed->uid;
 	},
 );
 
@@ -29,8 +37,15 @@ has app_id => (
 	lazy => 1,
 	default => sub {
 		my $self = shift;
-		$self->cookie->app_id;
+		$self->signed->app_id;
 	},
+);
+
+has api_key => (
+	isa => 'Maybe[Str]',
+	is => 'rw',
+	lazy => 1,
+	default => sub { croak 'api_key is required' },
 );
 
 has secret => (
@@ -39,7 +54,7 @@ has secret => (
 	lazy => 1,
 	default => sub {
 		my $self = shift;
-		$self->cookie->secret;
+		$self->signed->secret;
 	},
 );
 
@@ -49,16 +64,26 @@ has access_token => (
 	lazy => 1,
 	default => sub {
 		my $self = shift;
-		$self->cookie->access_token;
+		$self->signed->access_token;
 	},
 );
 
-has cookie => (
-	isa => 'Facebook::Cookie',
+has access_token_secret => (
+	isa => 'Maybe[Str]',
 	is => 'ro',
 	lazy => 1,
-	default => sub { croak 'cookie is require' },
-	predicate => 'has_cookie',
+	default => sub {
+		my $self = shift;
+		$self->signed->access_token_secret;
+	},
+);
+
+has signed => (
+	isa => 'Facebook::Signed',
+	is => 'ro',
+	lazy => 1,
+	default => sub { croak 'signed values are required' },
+	predicate => 'has_signed',
 );
 
 has graph_class => (
@@ -101,7 +126,8 @@ has rest_api => (
 		require $rest_class_file.'.pm';
 		$self->rest_class->import;
 		$self->rest_class->new(
-			app_id => $self->app_id,
+			desktop => $self->desktop ? 0 : 1,
+			api_key => $self->api_key,
 			secret => $self->secret,
 		);
 	},
@@ -130,7 +156,7 @@ Facebook - The try for a Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.009
+version 0.010
 
 =head1 SYNOPSIS
 
@@ -138,17 +164,30 @@ version 0.009
 
   my $fb = Facebook->new(
     app_id => $app_id,
+    api_key => $api_key,
     secret => $secret,
   );
 
-  use Facebook::Cookie;
+  use Facebook::Signed;
 
-  my $fb = Facebook->new(
-    cookie => Facebook::Cookie->new(
-      app_id => $app_id,
+  my $logged_in_fb = Facebook->new(
+    signed => Facebook::Signed->new(
       secret => $secret,
-      cookie => $cookie_as_text,
+      facebook_data => $facebook_cookie_for_your_application_as_text,
     ),
+    app_id => $app_id,
+    secret => $secret,
+	api_key => $api_key,
+  );
+
+  # If you dont provide secret, it will try to fetch it from signed values
+  my $shorter_logged_in_fb = Facebook->new(
+    signed => Facebook::Signed->new(
+      secret => $secret,
+      facebook_data => $facebook_cookie_for_your_application_as_text,
+    ),
+    app_id => $app_id,
+    api_key => $api_key,
   );
   
   # You need to have Facebook::Graph installed so that this works
