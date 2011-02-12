@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::Cookie::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::Cookie::VERSION = '0.100';
+  $Facebook::Cookie::VERSION = '0.101';
 }
 # ABSTRACT: DEPRECATED (replaced by Facebook::Signed)
 
@@ -21,7 +21,7 @@ Facebook::Cookie - DEPRECATED (replaced by Facebook::Signed)
 
 =head1 VERSION
 
-version 0.100
+version 0.101
 
 =head1 DESCRIPTION
 

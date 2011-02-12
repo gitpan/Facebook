@@ -45,7 +45,7 @@
          "web" : "http://github.com/Getty/p5-facebook/tree"
       }
    },
-   "version" : "0.100",
+   "version" : "0.101",
    "x_Dist_Zilla" : {
       "plugins" : [
          {

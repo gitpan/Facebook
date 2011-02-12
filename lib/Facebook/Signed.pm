@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::Signed::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::Signed::VERSION = '0.100';
+  $Facebook::Signed::VERSION = '0.101';
 }
 # ABSTRACT: Signed values given by Facebook to an application
 
@@ -144,12 +144,19 @@ Facebook::Signed - Signed values given by Facebook to an application
 
 =head1 VERSION
 
-version 0.100
+version 0.101
 
 =head1 SYNOPSIS
 
   my $signed = Facebook::Signed->new(
-	facebook_data => $cookie_as_text,
+	cookie_param => $cookie_as_text,
+	secret => $secret,
+  );
+
+	OR
+
+  my $signed = Facebook::Signed->new(
+	canvas_param => $canvas_as_text,
 	secret => $secret,
   );
 
