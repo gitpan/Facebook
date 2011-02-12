@@ -9,8 +9,8 @@ use ExtUtils::MakeMaker 6.31;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'The try for a Facebook SDK in Perl',
-  'AUTHOR' => 'Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>',
+  'ABSTRACT' => 'Facebook SDK in Perl',
+  'AUTHOR' => 'Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>, Frank Sheiness <syndesis@gmail.com>',
   'BUILD_REQUIRES' => {
     'Test::More' => '0.96'
   },
@@ -22,10 +22,14 @@ my %WriteMakefileArgs = (
   'LICENSE' => 'perl',
   'NAME' => 'Facebook',
   'PREREQ_PM' => {
+    'Digest::MD5' => '2.51',
+    'Digest::SHA' => '5.50',
+    'JSON' => '2.50',
+    'MIME::Base64::URLSafe' => '0',
     'Moose' => '1.15',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.010',
+  'VERSION' => '0.100',
   'test' => {
     'TESTS' => 't/*.t'
   }

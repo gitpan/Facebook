@@ -3,9 +3,9 @@ BEGIN {
   $Facebook::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::VERSION = '0.010';
+  $Facebook::VERSION = '0.100';
 }
-# ABSTRACT: The try for a Facebook SDK in Perl
+# ABSTRACT: Facebook SDK in Perl
 
 use Moose;
 use Carp qw/croak/;
@@ -152,11 +152,11 @@ __END__
 
 =head1 NAME
 
-Facebook - The try for a Facebook SDK in Perl
+Facebook - Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.010
+version 0.100
 
 =head1 SYNOPSIS
 
@@ -234,13 +234,23 @@ Returns an instance of the rest_class (by default this is L<WWW::Facebook::API>)
 
 =head1 TROUBLESHOOTING
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>
 
+=item *
+
+Frank Sheiness <syndesis@gmail.com>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Raudssus Social Software & Facebook Distribution Authors.
+This software is copyright (c) 2011 by Raudssus Social Software & Facebook Distribution Authors.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

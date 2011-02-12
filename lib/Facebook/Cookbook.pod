@@ -11,7 +11,7 @@ Facebook::Cookbook - How to cook your face.....book :)
 
 =head1 VERSION
 
-version 0.010
+version 0.100
 
 =head1 DESCRIPTION
 
@@ -61,13 +61,23 @@ listed on L<Facebook> and all other packages in this distribution.
 This documentation is free software and may be distributed under the same terms
 as perl itself.
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>
 
+=item *
+
+Frank Sheiness <syndesis@gmail.com>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Raudssus Social Software & Facebook Distribution Authors.
+This software is copyright (c) 2011 by Raudssus Social Software & Facebook Distribution Authors.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

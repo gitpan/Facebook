@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::Cookie::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::Cookie::VERSION = '0.010';
+  $Facebook::Cookie::VERSION = '0.100';
 }
 # ABSTRACT: DEPRECATED (replaced by Facebook::Signed)
 
@@ -21,7 +21,7 @@ Facebook::Cookie - DEPRECATED (replaced by Facebook::Signed)
 
 =head1 VERSION
 
-version 0.010
+version 0.100
 
 =head1 DESCRIPTION
 
@@ -31,13 +31,23 @@ If you have code using this package, please switch to L<Facebook::Signed>.
 
 =encoding utf8
 
-=head1 AUTHOR
+=head1 AUTHORS
+
+=over 4
+
+=item *
 
 Torsten Raudssus <torsten@raudssus.de> L<http://www.raudssus.de/>
 
+=item *
+
+Frank Sheiness <syndesis@gmail.com>
+
+=back
+
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Raudssus Social Software & Facebook Distribution Authors.
+This software is copyright (c) 2011 by Raudssus Social Software & Facebook Distribution Authors.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
