@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::Signed::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::Signed::VERSION = '0.101';
+  $Facebook::Signed::VERSION = '0.102';
 }
 # ABSTRACT: Signed values given by Facebook to an application
 
@@ -52,7 +52,7 @@ has _signed_values => (
 		} elsif ($self->cookie_param) {
 			check_cookie_payload($self->cookie_param, $self->secret);
 		} else {
-			croak "You must use one (and only one) of canvas_param OR cookie_param";
+			return {};
 		}
 	},
 );
@@ -144,7 +144,7 @@ Facebook::Signed - Signed values given by Facebook to an application
 
 =head1 VERSION
 
-version 0.101
+version 0.102
 
 =head1 SYNOPSIS
 
@@ -157,6 +157,12 @@ version 0.101
 
   my $signed = Facebook::Signed->new(
 	canvas_param => $canvas_as_text,
+	secret => $secret,
+  );
+
+	OR
+
+  my $signed = Facebook::Signed->new(
 	secret => $secret,
   );
 

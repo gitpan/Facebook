@@ -24,7 +24,7 @@ requires:
 resources:
   homepage: http://github.com/Getty/p5-facebook/tree
   repository: git://github.com/Getty/p5-facebook.git
-version: 0.101
+version: 0.102
 x_Dist_Zilla:
   plugins:
     -

@@ -11,7 +11,7 @@ Facebook::Manual - All you need to know about, and developing applications for, 
 
 =head1 VERSION
 
-version 0.101
+version 0.102
 
 =head1 DESCRIPTION
 

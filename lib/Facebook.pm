@@ -3,7 +3,7 @@ BEGIN {
   $Facebook::AUTHORITY = 'cpan:GETTY';
 }
 BEGIN {
-  $Facebook::VERSION = '0.101';
+  $Facebook::VERSION = '0.102';
 }
 # ABSTRACT: Facebook SDK in Perl
 
@@ -156,7 +156,7 @@ Facebook - Facebook SDK in Perl
 
 =head1 VERSION
 
-version 0.101
+version 0.102
 
 =head1 SYNOPSIS
 
